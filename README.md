@@ -127,3 +127,10 @@ route add -net 0.0.0.0 netmask 0.0.0.0 gw 192.191.0.5
 ```
 route add -net 0.0.0.0 netmask 0.0.0.0 gw 192.191.0.1
 ```
+
+## Konfigurasi Routing
+- tambahkan kode berikut di `/etc/sysctl.conf` untuk `Strix`, `Westalis` dan `Ostania`
+```
+net.ipv4.ip_forward=1
+net.ipv4.conf.all.accept_source_route = 1
+```
