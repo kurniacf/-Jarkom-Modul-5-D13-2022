@@ -107,3 +107,23 @@ iface eth0 inet static
 auto eth0
 iface eth0 inet dhcp
 ```
+## Command Routing
+- Strix
+```
+# dari Ostania
+route add -net 192.191.1.0 netmask 255.255.255.0 gw 192.191.0.2
+route add -net 192.191.2.0 netmask 255.255.254.0 gw 192.191.0.2
+route add -net 192.191.0.16 netmask 255.255.255.248 gw 192.191.0.2
+# dari Westalis
+route add -net 192.191.4.0 netmask 255.255.252.0 gw 192.191.0.6
+route add -net 192.191.0.64 netmask 255.255.255.192 gw 192.191.0.6
+route add -net 192.191.0.8 netmask 255.255.255.248 gw 192.191.0.6
+```
+- Westalis
+```
+route add -net 0.0.0.0 netmask 0.0.0.0 gw 192.191.0.5
+```
+- Ostania
+```
+route add -net 0.0.0.0 netmask 0.0.0.0 gw 192.191.0.1
+```
