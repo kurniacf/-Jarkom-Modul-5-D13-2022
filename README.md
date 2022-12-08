@@ -79,7 +79,7 @@ iface eth0 inet static
 ```
 auto eth0
 iface eth0 inet static
-	address 192.191.0.10
+	address 192.191.0.11
 	netmask 255.255.255.248
   gateway 192.191.0.9
 ```
