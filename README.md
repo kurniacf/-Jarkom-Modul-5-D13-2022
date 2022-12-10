@@ -134,3 +134,49 @@ route add -net 0.0.0.0 netmask 0.0.0.0 gw 192.191.0.1
 net.ipv4.ip_forward=1
 net.ipv4.conf.all.accept_source_route = 1
 ```
+
+## Konfigurasi dhcpd
+```
+# (Forger)
+subnet 192.191.0.64 netmask 255.255.255.192 {
+    range 192.191.0.66 192.191.0.126;
+    option routers 192.191.0.65;
+    option broadcast-address 192.191.0.127;
+    option domain-name-servers 192.191.0.10; # IP Eden
+    default-lease-time 600;
+    max-lease-time 7200;
+}
+
+# (Desmond)
+subnet 192.191.4.0 netmask 255.255.252.0 {
+    range 192.191.4.2 192.191.7.191;
+    option routers 192.191.4.1;
+    option broadcast-address 192.191.7.255;
+    option domain-name-servers 192.191.0.10;
+    default-lease-time 600;
+    max-lease-time 7200;
+}
+
+# (Blackbell)
+subnet 192.191.2.0 netmask 255.255.254.0 {
+    range 192.191.2.2 192.191.3.0;
+    option routers 192.191.2.1;
+    option broadcast-address 192.191.3.255;
+    option domain-name-servers 192.191.0.10;
+    default-lease-time 600;
+    max-lease-time 7200;
+}
+
+# (Briar)
+subnet 192.191.1.0 netmask 255.255.255.0 {
+    range 192.191.1.2 192.191.1.201;
+    option routers 192.191.1.1;
+    option broadcast-address 192.191.1.255;
+    option domain-name-servers 192.191.0.10;
+    default-lease-time 600;
+    max-lease-time 7200;
+}
+
+# (self)
+subnet 192.191.0.8 netmask 255.255.255.248 {}
+```
