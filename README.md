@@ -180,3 +180,25 @@ subnet 192.191.1.0 netmask 255.255.255.0 {
 # (self)
 subnet 192.191.0.8 netmask 255.255.255.248 {}
 ```
+
+# **No. 1** 
+Agar topologi yang kalian buat dapat mengakses keluar, kalian diminta untuk mengkonfigurasi Strix menggunakan iptables, tetapi Loid tidak ingin menggunakan MASQUERADE.
+- pada Strix
+```
+IPETH0="$(ip -br a | grep eth0 | awk '{print $NF}' | cut -d'/' -f1)"
+iptables -t nat -A POSTROUTING -o eth0 -j SNAT --to-source "$IPETH0" -s 192.191.0.0/21
+```
+
+# **No. 2** 
+Kalian diminta untuk melakukan drop semua TCP dan UDP dari luar Topologi kalian pada server yang merupakan DHCP Server demi menjaga keamanan.
+- pada Strix
+```
+iptables -A FORWARD -d 192.191.0.11 -i eth0 -p tcp -j DROP
+iptables -A FORWARD -d 192.191.0.11 -i eth0 -p udp -j DROP
+```
+- menggunakan ```iptables```
+- ```-A``` mengappend rule ```FORWARD``` karena akan diteruskan ke dhcp server
+- ```-d``` merupakan destinasi ke ip dhcp server yaitu ```192.191.0.11```
+- ```-i``` nge match paket pada interface yg di mau in, disini ```eth0``` karena terhubung ke NAT
+- ```-p``` protocolnya apa, disoal diminta ```tcp``` dan ```udp```
+- ```-j``` jump packet ke sebuah target aksi, di soal diminta ```DROP```
