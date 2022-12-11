@@ -1,3 +1,8 @@
+## **Data Kelompok D13**
+| Nama | Kelas-Kelompok | NRP |
+| ------------- | ------------- | ------------- |
+| Marcellino Mahesa Janitra | D-13 | 5025201105 |
+
 # Topologi
 ![image](https://cdn.discordapp.com/attachments/677050949432377345/1049940255916171334/image.png)
 # Pembagian Subnet
