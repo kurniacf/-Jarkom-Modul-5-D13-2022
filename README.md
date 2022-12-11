@@ -333,6 +333,15 @@ iptables -A INPUT -j REJECT
 
 ![image](https://user-images.githubusercontent.com/74979139/206896162-3956d1dd-545e-437c-bc37-c68a2fda7781.png)
 
+- ngeping ke garden saat jam kerja
+
+![image](https://user-images.githubusercontent.com/74979139/206897070-039ee40c-27d5-4974-9a35-fbc3b2621bc8.png)
+
+- ngeping ke sss saat jam kerja
+
+![image](https://user-images.githubusercontent.com/74979139/206897094-802fa3ac-b934-4e07-a5bc-41c9a5caebfa.png)
+
+
 
 # **No. 5**
 Karena kita memiliki 2 Web Server, Loid ingin Ostania diatur sehingga setiap request dari client yang mengakses Garden dengan port 80 akan didistribusikan secara bergantian pada SSS dan Garden secara berurutan dan request dari client yang mengakses SSS dengan port 443 akan didistribusikan secara bergantian pada Garden dan SSS secara berurutan.
