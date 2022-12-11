@@ -1,54 +1,89 @@
+# Praktikum Jaringan Komputer Modul 5 Kelompok D13
+
+# Jarkom-Modul-5-D13-2022
+
 ## **Data Kelompok D13**
-| Nama | Kelas-Kelompok | NRP |
-| ------------- | ------------- | ------------- |
-| Marcellino Mahesa Janitra | D-13 | 5025201105 |
-| Abisha Kean Tuana Sirait | D-13 | 5025201052 |
+| **No** | **Nama**                  | **NRP**    |
+| ------ | ------------------------- | ---------- |
+| 1      | Marcellino Mahesa Janitra | 5025201105 |
+| 2      | Kurnia Cahya Febryanto    | 5025201073 |
+| 3      | Abisha Kean Tuana Sirait  | 5025201052 |
+
+## Daftar Isi
+- [Topologi Jaringan](#topologi)
+- [Pembagian Subnet](#pembagian-subnet)
+- [Pembagian IP](#pembagian-ip)
+- [Routing](#routing)
+  - [Eden](#eden)
+  - [WISE](#wise)
+  - [Garden](#garden)
+  - [SSS](#sss)
+  - [Ostania](#ostania)
+  - [Westalis](#westalis)
+  - [Strix](#strix)
+- [Command Routing](#command-routing)
+  - [Eden](#eden-1)
+  - [WISE](#wise-1)
+  - [Garden](#garden-1)
+  - [SSS](#sss-1)
+  - [Ostania](#ostania-1)
+  - [Westalis](#westalis-1)
+  - [Strix](#strix-1)
+- [konfigurasi Routing](#konfigurasi-routing)
+- [Konfigurasi DHCP](#konfigurasi-dhcp)
+
+- [No 1](#no-1)
+- [No 2](#no-2)
+- [No 3](#no-3)
+- [No 4](#no-4)
+- [No 5](#no-5)
+- [No 6](#no-6)
+
 # Topologi
 ![image](https://cdn.discordapp.com/attachments/677050949432377345/1049940255916171334/image.png)
-# Pembagian Subnet
+## Pembagian Subnet
 ![image](https://media.discordapp.net/attachments/677050949432377345/1049940071844937820/image.png?width=846&height=559)
-# Pembagian IP
+## Pembagian IP
 ![image](https://user-images.githubusercontent.com/74979139/206114789-c3bb1c5b-0b33-4a62-b05d-be3e2f6057fd.png)
-# Routing
-- Strix
-```
-auto eth0
-iface eth0 inet dhcp
+## Routing
 
-auto eth1
-iface eth1 inet static
-	address 192.191.0.1
-	netmask 255.255.255.252
-
-auto eth2
-iface eth2 inet static
-	address 192.191.0.5
-	netmask 255.255.255.252
-  ```
-- Westalis
+### Eden
 ```
 auto eth0
 iface eth0 inet static
-	address 192.191.0.6
-	netmask 255.255.255.252
-	gateway 192.191.0.5
-  
-auto eth1
-iface eth1 inet static
-	address 192.191.0.9
-	netmask 255.255.252.248
-  
-auto eth2
-iface eth2 inet static
-	address 192.191.0.65
-	netmask 255.255.255.192
-  
-auto eth3
-iface eth3 inet static
-	address 192.191.4.1
-	netmask 255.255.252.0
+	address 192.191.0.10
+	netmask 255.255.255.248
+  	gateway 192.191.0.9
 ```
-- Ostania
+
+### WISE
+```
+auto eth0
+iface eth0 inet static
+	address 192.191.0.11
+	netmask 255.255.255.248
+  	gateway 192.191.0.9
+```
+
+### Garden
+```
+auto eth0
+iface eth0 inet static
+	address 192.191.0.18
+	netmask 255.255.255.248
+	gateway 192.191.0.17
+```
+
+### SSS
+```
+auto eth0
+iface eth0 inet static
+	address 192.191.0.19
+	netmask 255.255.255.248
+	gateway 192.191.0.17
+```
+
+### Ostania
 ```
 auto eth0
 iface eth0 inet static
@@ -71,16 +106,64 @@ iface eth3 inet static
 	address 192.191.0.17
 	netmask 255.255.255.248
 ```
-- Eden
+
+### Westalis
 ```
 auto eth0
 iface eth0 inet static
-	address 192.191.0.10
-	netmask 255.255.255.248
-  gateway 192.191.0.9
+	address 192.191.0.6
+	netmask 255.255.255.252
+	gateway 192.191.0.5
+  
+auto eth1
+iface eth1 inet static
+	address 192.191.0.9
+	netmask 255.255.252.248
+  
+auto eth2
+iface eth2 inet static
+	address 192.191.0.65
+	netmask 255.255.255.128
+  
+auto eth3
+iface eth3 inet static
+	address 192.191.4.1
+	netmask 255.255.252.0
 ```
 
-- WISE
+### Strix
+```
+auto eth0
+iface eth0 inet dhcp
+
+auto eth1
+iface eth1 inet static
+	address 192.191.0.1
+	netmask 255.255.255.252
+
+auto eth2
+iface eth2 inet static
+	address 192.191.0.5
+	netmask 255.255.255.252
+```
+- Forger
+- Desmond
+- Blackbell
+- Briar
+
+## Command Routing
+
+### Eden
+```
+echo nameserver 192.168.122.1 > /etc/resolv.conf
+```
+
+### WISE
+```
+echo nameserver 192.168.122.1 > /etc/resolv.conf
+```
+
+### Garden
 ```
 auto eth0
 iface eth0 inet static
@@ -88,49 +171,47 @@ iface eth0 inet static
 	netmask 255.255.255.248
   gateway 192.191.0.9
 ```
-- Garden
+
+### SSS
 ```
-auto eth0
-iface eth0 inet static
-	address 192.191.0.18
-	netmask 255.255.255.248
-	gateway 192.191.0.17
+echo nameserver 192.168.122.1 > /etc/resolv.conf
 ```
-- SSS
+
+### Ostania
 ```
-auto eth0
-iface eth0 inet static
-	address 192.191.0.19
-	netmask 255.255.255.248
-	gateway 192.191.0.17
+echo nameserver 192.168.122.1 > /etc/resolv.conf
+
+route add -net 0.0.0.0 netmask 0.0.0.0 gw 192.191.0.1
+route add -net 192.191.0.8 netmask 255.255.255.248 gw 192.191.0.1
+# route add -net 192.191.0.64 netmask 255.255.255.128 gw 192.191.0.1
+route add -net 192.191.4.0 netmask 255.255.252.0 gw 192.191.0.1
+# route add -net 192.191.0.6 netmask 255.255.255.252 gw 192.191.0.1
 ```
-- Forger
-- Desmond
-- Blackbell
-- Briar
+
+### Westalis
 ```
-auto eth0
-iface eth0 inet dhcp
+echo nameserver 192.168.122.1 > /etc/resolv.conf
+
+route add -net 0.0.0.0 netmask 0.0.0.0 gw 192.191.0.5
+# route add -net 192.191.0.1 netmask 255.255.255.252 gw 192.191.0.5
+route add -net 192.191.1.0 netmask 255.255.255.0 gw 192.191.0.5
+route add -net 192.191.2.0 netmask 255.255.254.0 gw 192.191.0.5
+route add -net 192.191.0.16 netmask 255.255.255.248 gw 192.191.0.5
 ```
-## Command Routing
-- Strix
+
+### Strix
 ```
+iptables -t nat -A POSTROUTING -o eth0 -j SNAT -s 10.25.0.0/21 --to-source 192.168.122.2
+
 # dari Ostania
 route add -net 192.191.1.0 netmask 255.255.255.0 gw 192.191.0.2
 route add -net 192.191.2.0 netmask 255.255.254.0 gw 192.191.0.2
 route add -net 192.191.0.16 netmask 255.255.255.248 gw 192.191.0.2
+
 # dari Westalis
 route add -net 192.191.4.0 netmask 255.255.252.0 gw 192.191.0.6
 route add -net 192.191.0.64 netmask 255.255.255.192 gw 192.191.0.6
 route add -net 192.191.0.8 netmask 255.255.255.248 gw 192.191.0.6
-```
-- Westalis
-```
-route add -net 0.0.0.0 netmask 0.0.0.0 gw 192.191.0.5
-```
-- Ostania
-```
-route add -net 0.0.0.0 netmask 0.0.0.0 gw 192.191.0.1
 ```
 
 ## Konfigurasi Routing
