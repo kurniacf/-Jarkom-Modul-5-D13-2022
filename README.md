@@ -236,3 +236,10 @@ iptables -A PREROUTING -t nat -p tcp --dport 433 -d 192.191.0.19 -m statistic --
 - yang pertama, destination port untuk rule ini 80 untuk ```Garden``` ```--dport 80 -d 192.191.0.18``` ke ```SSS``` dengan port 80 ```--to-destination 192.191.0.19:80```
 - yang kedua gantian, destination port untuk rule ini 80 dari ```SSS``` ```--dport 433 -d 192.191.0.19``` ke ```Garden``` dengan port 80 ```--to-destination 192.191.0.18:433```
 - ```--every 2``` mengatur distribusi packet
+
+# **No. 6**
+Karena Loid ingin tau paket apa saja yang di-drop, maka di setiap node server dan router ditambahkan logging paket yang di-drop dengan standard syslog level
+- pada setiap node
+```
+iptables -A INPUT  -j LOG --log-level debug --log-prefix 'Dropped Packet' -m limit --limit 1/second --limit-burst 10
+```
