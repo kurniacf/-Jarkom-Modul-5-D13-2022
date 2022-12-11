@@ -223,3 +223,16 @@ iptables -A INPUT -j REJECT
 ```
 - diantara jam 07:00 dan 16:00 bakalan ```ACCEPT```
 - selain itu ```REJECT```
+
+# **No. 5**
+Karena kita memiliki 2 Web Server, Loid ingin Ostania diatur sehingga setiap request dari client yang mengakses Garden dengan port 80 akan didistribusikan secara bergantian pada SSS dan Garden secara berurutan dan request dari client yang mengakses SSS dengan port 443 akan didistribusikan secara bergantian pada Garden dan SSS secara berurutan.
+
+- pada Ostania
+```
+iptables -A PREROUTING -t nat -p tcp --dport 80 -d 192.191.0.18 -m statistic --mode nth --every 2 --packet 0 -j DNAT --to-destination 192.191.0.19:80
+iptables -A PREROUTING -t nat -p tcp --dport 433 -d 192.191.0.19 -m statistic --mode nth --every 2 --packet 0 -j DNAT --to-destination 192.191.0.18:433
+```
+- ```-A``` append rule ```PREROUTING```
+- yang pertama, destination port untuk rule ini 80 untuk ```Garden``` ```--dport 80 -d 192.191.0.18``` ke ```SSS``` dengan port 80 ```--to-destination 192.191.0.19:80```
+- yang kedua gantian, destination port untuk rule ini 80 dari ```SSS``` ```--dport 433 -d 192.191.0.19``` ke ```Garden``` dengan port 80 ```--to-destination 192.191.0.18:433```
+- ```--every 2``` mengatur distribusi packet
