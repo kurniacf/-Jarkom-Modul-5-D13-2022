@@ -208,6 +208,9 @@ iptables -A FORWARD -d 192.191.0.11 -i eth0 -p udp -j DROP
 - ```-p``` protocolnya apa, disoal diminta ```tcp``` dan ```udp```
 - ```-j``` jump packet ke sebuah target aksi, di soal diminta ```DROP```
 
+- tes ping google di wise
+![image](https://user-images.githubusercontent.com/74979139/206895940-54013285-ac58-4d5b-8a2c-17d080594919.png)
+
 # **No. 3**
 Loid meminta kalian untuk membatasi DHCP dan DNS Server hanya boleh menerima maksimal 2 koneksi ICMP secara bersamaan menggunakan iptables, selebihnya didrop.
 - Config DHCP Server (WISE) dan DNS Server (Eden)
@@ -219,6 +222,18 @@ iptables -A INPUT -p icmp -m connlimit --connlimit-above 2 --connlimit-mask 0 -j
 - untuk diatas 2 paket ```--connlimit-above 2```
 - ```-j DROP``` akan di drop 
 
+## tes ping ke ```Eden``` dari 3 client bersamaan
+- ```Blackbell```
+
+![image](https://user-images.githubusercontent.com/74979139/206896052-e5b65447-365c-44f6-a039-86bbd47c486b.png)
+- ```Forger```
+
+![image](https://user-images.githubusercontent.com/74979139/206896059-6f32ab26-4f37-4f5f-a6d8-cb6f7c31cc11.png)
+- ```Desmond```
+
+![image](https://user-images.githubusercontent.com/74979139/206896063-e3659f54-e3a7-4dc4-bcf0-a837189e9026.png)
+
+
 # **No. 4**
 Akses menuju Web Server hanya diperbolehkan disaat jam kerja yaitu Senin sampai Jumat pada pukul 07.00 - 16.00.
 - pada Web Server (Garden dan SSS)
@@ -228,6 +243,15 @@ iptables -A INPUT -j REJECT
 ```
 - diantara jam 07:00 dan 16:00 bakalan ```ACCEPT```
 - selain itu ```REJECT```
+## Test
+- ngeping ke garden saat diluar jam kerja
+
+![image](https://user-images.githubusercontent.com/74979139/206896137-28cc87f6-fbb9-448f-8de3-64787ef215f3.png)
+
+- ngeping ke sss saat diluar jam kerja
+
+![image](https://user-images.githubusercontent.com/74979139/206896162-3956d1dd-545e-437c-bc37-c68a2fda7781.png)
+
 
 # **No. 5**
 Karena kita memiliki 2 Web Server, Loid ingin Ostania diatur sehingga setiap request dari client yang mengakses Garden dengan port 80 akan didistribusikan secara bergantian pada SSS dan Garden secara berurutan dan request dari client yang mengakses SSS dengan port 443 akan didistribusikan secara bergantian pada Garden dan SSS secara berurutan.
@@ -242,9 +266,17 @@ iptables -A PREROUTING -t nat -p tcp --dport 433 -d 192.191.0.19 -m statistic --
 - yang kedua gantian, destination port untuk rule ini 80 dari ```SSS``` ```--dport 433 -d 192.191.0.19``` ke ```Garden``` dengan port 80 ```--to-destination 192.191.0.18:433```
 - ```--every 2``` mengatur distribusi packet
 
+## Test
+- menggunakan command ```while true; do nc -l -p 80 -c 'echo $HOSTNAME'; done``` pada ```SSS``` dam ```Garden``` untuk mengetahui host mana yang diakses
+- jika ingin nge ping ke port 433, ganti ```-p 80``` dengan ```-p 433```
+- untuk nge ping nya pakai command ```nc [ip Garden] 80``` atau ```nc [ip SSS] 433```
+
 # **No. 6**
 Karena Loid ingin tau paket apa saja yang di-drop, maka di setiap node server dan router ditambahkan logging paket yang di-drop dengan standard syslog level
 - pada setiap node server dan router
 ```
 iptables -A INPUT  -j LOG --log-level debug --log-prefix 'Dropped Packet'
 ```
+
+## Test
+- gunakan command ```iptables -L``` untuk melihat config test sudah ada belum
