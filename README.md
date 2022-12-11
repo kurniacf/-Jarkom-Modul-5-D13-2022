@@ -202,3 +202,24 @@ iptables -A FORWARD -d 192.191.0.11 -i eth0 -p udp -j DROP
 - ```-i``` nge match paket pada interface yg di mau in, disini ```eth0``` karena terhubung ke NAT
 - ```-p``` protocolnya apa, disoal diminta ```tcp``` dan ```udp```
 - ```-j``` jump packet ke sebuah target aksi, di soal diminta ```DROP```
+
+# **No. 3**
+Loid meminta kalian untuk membatasi DHCP dan DNS Server hanya boleh menerima maksimal 2 koneksi ICMP secara bersamaan menggunakan iptables, selebihnya didrop.
+- Config DHCP Server (WISE) dan DNS Server (Eden)
+```
+iptables -A INPUT -p icmp -m connlimit --connlimit-above 2 --connlimit-mask 0 -j DROP
+```
+- menggunakan rule connection limit ```-m connlimit```
+- ```--connlimit-mask 0``` untuk semua paket masuk bakalan menggunakan filtering dari connlimit
+- untuk diatas 2 paket ```--connlimit-above 2```
+- ```-j DROP``` akan di drop 
+
+# **No. 4**
+Akses menuju Web Server hanya diperbolehkan disaat jam kerja yaitu Senin sampai Jumat pada pukul 07.00 - 16.00.
+- pada Web Server (Garden dan SSS)
+```
+iptables -A INPUT -m time --timestart 07:00 --timestop 16:00 --weekdays Mon,Tue,Wed,Thu,Fri -j ACCEPT
+iptables -A INPUT -j REJECT
+```
+- diantara jam 07:00 dan 16:00 bakalan ```ACCEPT```
+- selain itu ```REJECT```
