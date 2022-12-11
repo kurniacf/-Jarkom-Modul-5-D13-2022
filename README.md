@@ -239,7 +239,7 @@ iptables -A PREROUTING -t nat -p tcp --dport 433 -d 192.191.0.19 -m statistic --
 
 # **No. 6**
 Karena Loid ingin tau paket apa saja yang di-drop, maka di setiap node server dan router ditambahkan logging paket yang di-drop dengan standard syslog level
-- pada setiap node
+- pada setiap node server dan router
 ```
-iptables -A INPUT  -j LOG --log-level debug --log-prefix 'Dropped Packet' -m limit --limit 1/second --limit-burst 10
+iptables -A INPUT  -j LOG --log-level debug --log-prefix 'Dropped Packet'
 ```
